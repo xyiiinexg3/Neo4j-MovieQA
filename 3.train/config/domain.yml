@@ -1,0 +1,96 @@
+
+session_config:
+  session_expiration_time: 60  # value in minutes, 0 means infinitely long
+  carry_over_slots_to_new_session: true  # set to false to forget slots between sessions
+
+slots:
+  movie:
+    type: text
+  person:
+    type: text
+  genre:
+    type: text
+  sure:
+    type: any
+  pre_movie:
+    type: any
+
+
+intents:
+  - first: {triggers: action_first}
+  - greet
+  - bye
+  - affirmative
+  - search_movie_rating
+  - search_movie_releasedate
+  - search_movie_genre
+  - search_movie_introduction
+  - search_movie_person
+  - search_person_biography
+  - search_person_genre_movie
+  - search_person_movie
+  # - search_person_person_movie
+  - search_person_movie_number
+  - search_person_birthday
+
+entities:
+  - movie
+  - person
+  - genre
+  # - person: 意图中有多个同实体类别的对象，可以用roles进行区分
+    # roles:
+    # - actorA
+    # - actorB
+
+responses:
+  utter_first:
+    - text: "您好，我是您的电影助手Alexia，我是个机器人，请问有什么可以帮您？"
+  utter_greet:
+    - text: "您好～"
+    - text: "您好呀～"
+  utter_goodbye:
+    - text: "再见，祝您生活愉快～"
+    - text: "拜拜，希望我有帮到您～"
+  utter_howcanhelp:
+    - text: "您可以这样向我提问: 霸王别姬/
+                              霸王别姬是什么类型的电影/
+                              霸王别姬的上映时间/
+                              霸王别姬的演员有哪些人/
+                              巩俐是谁/
+                              巩俐的出生日期/
+                              巩俐演了多少部电影/
+                              巩俐演了哪些电影/
+                              巩俐有演过恐怖电影吗"
+    # - text: "您可以这样向我提问: 霸王别姬/
+    #                           霸王别姬是什么类型的电影/
+    #                           霸王别姬的上映时间/
+    #                           霸王别姬的演员有哪些人/
+    #                           巩俐是谁/
+    #                           巩俐的出生日期/
+    #                           巩俐演了多少部电影/
+    #                           巩俐演了哪些电影/
+    #                           巩俐和张曼玉合作了什么电影/ 删除
+    #                           巩俐有演过恐怖电影吗"
+  utter_donknow:
+    - text: "啊噢，我没有理解您说的话，我的理解力还需要更多的提升>_<。"
+
+actions:
+  - utter_first
+  - utter_donknow
+  - action_first
+  - action_donknow
+  - action_echo
+  - action_search_movie_rating
+  - action_search_movie_releasedate
+  - action_search_movie_genre
+  - action_search_movie_introduction
+  - action_search_movie_person
+  - action_search_person_biography
+  - action_search_person_genre_movie
+  - action_search_person_movie
+  # - action_search_person_person_movie
+  - action_search_person_movie_number
+  - action_search_person_birthday
+  - utter_greet
+  - utter_howcanhelp
+  - utter_goodbye

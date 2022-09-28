@@ -1,0 +1,324 @@
+import ./common.chatito
+
+
+# Ways to request an specific answer
+# NOTE: 60% of the examples should come from the first sentence, and 40% from the second
+# ('training': '500', 'testing': '100')
+
+# 搜索意图有14-3=11种
+# 0.搜索电影评分
+%[search_movie_rating]('training': '3000', 'testing': '300')
+    *[90%] @[movie]~[这部?]~[电影?]~[的?]~[rating]~[is?]~[多少?]
+    *[10%] @[movie]~[得了多少分]
+
+# 1.搜索电影上映时间
+%[search_movie_releasedate]('training': '1500', 'testing': '150')
+    *[40%] @[movie]~[的?]~[release]~[时间?]~[是什么时候?]
+    *[50%] @[movie]~[什么时候]~[atcinema?]~[release]
+    *[10%] ~[什么时候]~[can]~[atcinema]~[看到]@[movie]
+
+# 2.搜索电影风格体裁
+%[search_movie_genre]('training': '1500', 'testing': '150')
+    *[50%] @[movie]~[的?]~[genre]~[是什么?]
+    *[50%] @[movie]~[是什么]~[genre]~[的?]~[电影?]
+
+# 3.搜索电影内容
+%[search_movie_introduction]('training': '3000', 'testing': '300')
+    *[50%] @[movie]
+    *[15%] @[movie]~[的?]~[introduction]~[generally?]~[是什么?]
+    *[15%] @[movie]~[的?]~[generally?]~[introduction]~[是什么?]
+    *[20%] @[movie]~[generally?]~[讲]~[了?]~[什么]~[brief?]
+
+# 4.搜索电影主演
+%[search_movie_person]('training': '1500', 'testing': '150')
+    *[50%] @[movie]~[这部电影?]~[is?]~[哪些]~[person]~[act?]
+    *[50%] @[movie]~[这部电影?]~[中]~[act?]~[的?]~[person]~[is]~[哪些]
+
+# 5.搜索演员信息
+%[search_person_biography]('training': '3000', 'testing': '300')
+    *[25%] @[person]~[是?]
+    *[25%] @[person]~[是谁?]
+    *[25%] ~[谁是?]@[person]
+    *[25%] @[person]~[的?]~[biography]
+
+# 6.搜索演员参演过哪些体裁的电影
+%[search_person_genre_movie]('training': '1000', 'testing': '150')
+    *[50%] @[person]~[act]~[过?]~[哪些]@[genre]~[的?]~[movie]
+    *[50%] @[person]~[act]~[过?]~[的?]@[genre]~[movie]~[有哪些?]
+
+# 7.搜索演员参演过的电影
+%[search_person_movie]('training': '1000', 'testing': '150')
+    *[40%] @[person]~[act]~[过?]~[哪些]~[movie]
+    *[40%] @[person]~[act]~[过?]~[的?]~[movie]~[有哪些?]
+    *[30%] @[person]~[有哪些]~[movie]
+
+# 8.搜索某演员参演的电影评分超过多少的有哪些
+
+# 9.搜索某演员参演的电影评分低于多少的有哪些
+
+# 10.搜索某演员参演过的电影类型有哪些
+
+# 11.搜索某演员和另一个演员合拍哪些电影
+; %[search_person_person_movie]('training': '1000', 'testing': '150')
+;     *[50%] @[person]~[and]@[person]~[acttogether]~[哪些]~[movie]
+;     *[50%] @[person]~[and]@[person]~[acttogether]~[的?]~[movie]~[有哪些?]
+
+# 12.搜索某演员的电影数量
+%[search_person_movie_number]('training': '1000', 'testing': '150')
+    *[50%] @[person]~[一共?]~[act]~[过]~[多少]~[部?]~[movie]
+    *[50%] @[person]~[act]~[的]~[movie]~[有多少]
+
+# 13.搜索某演员的出生日期
+%[search_person_birthday]('training': '1500', 'testing': '150')
+    *[100%] @[person]~[的?]~[birthday]~[是?]~[多少?]
+
+
+# 常用语
+~[movie]
+    电影
+    影片
+
+~[rating]
+    评分
+    分数
+    
+~[is]
+    是
+    有
+
+~[release]
+    上线
+    上映
+    首映
+    首播
+    放映
+
+~[can]
+    能
+    可以
+
+~[atcinema]
+    在影院
+    在电影院
+
+~[genre]
+    风格
+    体裁
+    格调
+    类型
+
+~[introduction]
+    剧情
+    故事
+    情节
+    内容
+    剧情简介
+    故事内容
+    情节梗概
+    故事梗概
+    故事线索
+
+~[brief]
+    剧情
+    故事
+    情节
+    内容
+
+~[generally]
+    主要
+    大致
+    大概
+
+~[act]
+    出演
+    出镜
+    表演
+    参演
+    演
+
+~[person]
+    人
+    演员
+
+~[biography]
+    介绍
+    简介
+    信息
+    详细信息
+
+~[and]
+    和
+    与
+
+~[acttogether]
+    一起拍了
+    一起演过
+    一起演了
+    一起拍过
+    合拍了
+    合作了
+    合拍过
+    合作过
+
+~[birthday]
+    出生日期
+    生日
+
+# 实体
+#电影15 nm
+@[movie]
+    Forrest Gump 
+    Kill Bill: Vol. 1 
+    英雄 
+    Miami Vice 
+    Indiana Jones and the Temple of Doom 
+    卧虎藏龙 
+    Kill Bill: Vol. 2 
+    The Matrix Reloaded 
+    The Matrix Revolutions 
+    Harry Potter and the Chamber of Secrets 
+    Harry Potter and the Prisoner of Azkaban 
+    Harry Potter and the Goblet of Fire 
+    Harry Potter and the Order of the Phoenix 
+    The Last Emperor 
+    Harry Potter and the Half-Blood Prince 
+    花样年华 
+    2046 
+    Lethal Weapon 4 
+    Hannibal Rising 
+    TMNT 
+    무사 
+    Anna and the King 
+    满城尽带黄金甲 
+    Teenage Mutant Ninja Turtles III 
+    The Forbidden Kingdom 
+    The Mummy: Tomb of the Dragon Emperor 
+    Memoirs of a Geisha 
+    Shakespeare in Love 
+    Lara Croft Tomb Raider: The Cradle of Life 
+    Wu Ji 
+    Romeo Must Die 
+    Rush Hour 
+    巴尔扎克与小裁缝 
+    风云雄霸天下 
+    Kiss of the Dragon 
+    Stardust 
+    The Long Run 
+    暗战 
+    最佳拍档 
+    Zuijia paidang daxian shentong 
+    Zuijia paidang zhi nuhuang miling 
+    Zuijia paidang zhi qianli jiu chaipo 
+    新最佳拍档 
+    The Transporter 
+    色‧戒 
+    Mimic 
+    Rush Hour 3 
+    Rush Hour 2 
+    Shanghai Knights 
+    Australia 
+    文雀 
+    霍元甲 
+    Samsara 
+    The Gods Must Be Crazy 
+    A Cock and Bull Story 
+    Shanghai Noon 
+    我是谁 
+    一半海水一半火焰 
+    倩女幽魂II人间道 
+
+# 演员15 nr
+@[person]
+    巩俐 
+    乔宏 
+    李连杰 
+    梁朝伟 
+    张曼玉 
+    章子怡 
+    甄子丹 
+    周润发 
+    鲍德熹 
+    曾江 
+    吴宇森 
+    张耀扬 
+    成龙 
+    袁和平 
+    任达华 
+    陈凯歌 
+    张柏芝 
+    刘烨 
+    王文隽 
+    郭富城 
+    杨恭如 
+    舒淇 
+    方中信 
+    杜琪峰 
+    张学友 
+    刘德华 
+    林雪 
+    曾志伟 
+    许冠杰 
+    林子祥 
+    刘家良 
+    陈雅伦 
+    李修贤 
+    黄锦燊 
+    潘恒生 
+    林熙蕾 
+    锺丽缇 
+    黄霑 
+    林青霞 
+    梁家辉 
+    周星驰 
+    元华 
+    莫文蔚 
+    洪金宝 
+    黄炳耀 
+    吴耀汉 
+    胡慧中 
+    林正英 
+    吴镇宇 
+    任贤齐 
+    陈国新 
+    袁咏仪 
+    谷德昭 
+    梁咏琪 
+    姜大卫 
+    关之琳 
+    莫少聪 
+    黄秋生 
+    黎明 
+    张敏 
+    邱淑贞 
+    黎姿 
+    程小东 
+    谭咏麟 
+    王祖贤 
+    葛民辉 
+    林海峰 
+    温翠苹 
+    邬君梅 
+    张国荣 
+    吴孟达 
+
+# 体裁15 ng
+@[genre]
+    冒险 
+    奇幻 
+    动画 
+    剧情 
+    恐怖 
+    动作 
+    喜剧 
+    历史 
+    西部 
+    惊悚 
+    犯罪 
+    纪录 
+    科幻 
+    悬疑 
+    音乐 
+    爱情 
+    家庭 
+    战争 
+    电视电影 

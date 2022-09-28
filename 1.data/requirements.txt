@@ -1,0 +1,13 @@
+# flask==0.12.2
+py2neo==3
+# xyx
+# py2neo==2020.0.0试试能不能连接图数据库
+# neo4j==3.5.17
+
+# jieba==0.39
+# scikit_learn==0.20.3
+# requests==2.18.4
+
+# xyx
+numpy==1.19.2
+pandas==1.1.5
